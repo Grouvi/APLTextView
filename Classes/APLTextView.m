@@ -122,14 +122,16 @@
 #pragma mark - text editing events
 
 - (void)textChanged:(NSNotification *)notification {
+    NSString* textWithoutSpaces = [self.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if ([self.placeholder length]) {
-        self.placeholderLabel.hidden = [self.text length];
+        self.placeholderLabel.hidden = [textWithoutSpaces length];
     }
     if (self.maxCharacters > 0) {
-        if ((self.markedTextRange == nil) && (self.maxCharacters < [self.text length])) {
-            self.text = [self.text substringToIndex:self.maxCharacters];
+        if ((self.markedTextRange == nil) && (self.maxCharacters < [textWithoutSpaces length])) {
+            self.text = [self.text substringToIndex:self.text.length - 1];
+            textWithoutSpaces = [textWithoutSpaces substringToIndex:self.maxCharacters];
         }
-        [self setCounterText:self.maxCharacters - [self.text length]];
+        [self setCounterText:self.maxCharacters - [textWithoutSpaces length]];
     }
 }
 
