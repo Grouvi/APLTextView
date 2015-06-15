@@ -114,7 +114,8 @@
 
 - (void)setMaxCharacters:(NSUInteger)maxCharacters {
     _maxCharacters = maxCharacters;
-    [self setCounterText:maxCharacters - [self.text length]];
+    NSString* textWithoutSpaces = [self.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [self setCounterText:maxCharacters - [textWithoutSpaces length]];
     self.counterLabel.hidden = ![self hasCounter];
     //self.contentInset = UIEdgeInsetsMake(0., 0., [self hasCounter] ? 17. : 0., 0.);
 }
