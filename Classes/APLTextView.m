@@ -89,7 +89,7 @@
     self.counterLabel.font = self.font;
     self.counterLabel.backgroundColor = [UIColor clearColor];
     self.counterLabel.textColor = [UIColor lightGrayColor];
-    self.counterLabel.hidden = ![self.text length];
+    [self updateCounterLabelVisibility];
     if (!self.counterLabel.superview) {
         [self addSubview:self.counterLabel];
     }
@@ -108,6 +108,14 @@
     [self.placeholderLabel sizeToFit];
 }
 
+- (void) updateCounterLabelVisibility {
+    if (self.text.length > 0 && self.isFirstResponder && [self hasCounter]) {
+        self.counterLabel.hidden = NO;
+    } else {
+        self.counterLabel.hidden = YES;
+    }
+}
+
 - (void)setCounterText:(NSUInteger)charactersLeft {
     self.counterLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)charactersLeft];
 }
@@ -116,7 +124,8 @@
     _maxCharacters = maxCharacters;
     NSString* textWithoutSpaces = [self.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     [self setCounterText:maxCharacters - [textWithoutSpaces length]];
-    //self.counterLabel.hidden = ![self hasCounter];
+    [self updateCounterLabelVisibility];
+    //self.counterLabel.hidden = (![self hasCounter] && ![self.text length]);
     //self.contentInset = UIEdgeInsetsMake(0., 0., [self hasCounter] ? 17. : 0., 0.);
 }
 
