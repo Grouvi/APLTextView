@@ -89,7 +89,7 @@
     self.counterLabel.font = self.font;
     self.counterLabel.backgroundColor = [UIColor clearColor];
     self.counterLabel.textColor = [UIColor lightGrayColor];
-    self.counterLabel.hidden = ![self hasCounter];
+    self.counterLabel.hidden = ![self.text length];
     if (!self.counterLabel.superview) {
         [self addSubview:self.counterLabel];
     }
@@ -116,7 +116,7 @@
     _maxCharacters = maxCharacters;
     NSString* textWithoutSpaces = [self.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     [self setCounterText:maxCharacters - [textWithoutSpaces length]];
-    self.counterLabel.hidden = ![self hasCounter];
+    //self.counterLabel.hidden = ![self hasCounter];
     //self.contentInset = UIEdgeInsetsMake(0., 0., [self hasCounter] ? 17. : 0., 0.);
 }
 
